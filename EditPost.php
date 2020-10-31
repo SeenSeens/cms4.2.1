@@ -133,7 +133,7 @@ if (isset($_POST['Submit'])) {
 									    $Id = $DataRows['id'];
 									    $categoryName = $DataRows['title'];
 									?>
-									<option value="<?= $categoryName; ?>"><?= $categoryName ?></option>
+									<option value="<?= $categoryName; ?>"><?= $categoryName; ?></option>
 									<?php endwhile; ?>
 								</select>
 							</div>

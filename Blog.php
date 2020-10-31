@@ -85,8 +85,15 @@ require_once 'Includes/Sessions.php';
 					<img src="Uploads/<?= htmlentities($Image); ?>" alt="" class="img-fluid card-img-top" style="max-height: 450px;">
 					<div class="card-boby">
 						<h4 class="card-title"><?= htmlentities($PostTitle); ?></h4>
-						<small class="text-muted">Written by <?= htmlentities($Admin); ?> On <?= htmlentities($DateTime); ?></small>
-						<span style="float: right;" class="badge badge-dark text-light">Comments 0</span>
+						<small class="text-muted">
+							Category <span class="text-dark"><?= htmlentities($Category); ?></span>
+							& Written by <span class="text-dark"><?= htmlentities($Admin); ?></span>
+							On <?= htmlentities($DateTime); ?>
+						</small>
+						<span style="float: right;" class="badge badge-dark text-light">
+							Comments
+							<?= ApproveCommentsAccordingtoPost($PostId); ?>
+						</span>
 						<hr>
 						<p class="card-text">
 							<?php
