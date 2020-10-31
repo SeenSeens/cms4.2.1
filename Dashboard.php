@@ -149,28 +149,26 @@ Confirm_Login();
 							<td><?= $Author; ?></td>
 							<td>
 								<?php
-								global $ConnectingDB;
-								$sqlApprove = "SELECT COUNT(*) FROM comments WHERE post_id = '$PostId' AND status = 'ON'";
-								$stmtApprove = $ConnectingDB->query($sqlApprove);
-								$RowsTotal = $stmtApprove->fetch();
-								$Total = array_shift($RowsTotal);
+								$Total = ApproveCommentsAccordingtoPost($PostId);
 								if ($Total > 0) { ?>
 									<span class="badge badge-success">
 									<?php echo $Total; ?>
 									</span>
 								<?php } ?>						
-								<span class="badge badge-danger">
-									<?php
-									global $ConnectingDB;
-									$sql = "SELECT COUNT(*) FROM comments WHERE post_id = '$PostId' AND status = 'OFF'";
-									$stmt = $ConnectingDB->query($sql);
-									$RowsTotal = $stmt->fetch();
-									$Total = array_shift($RowsTotal);
-									echo $Total;
-									?>
-								</span>
+								
+								<?php
+								$Total = DisApproveCommentsAccordingtoPost($PostId);
+								if($Total > 0) { ?>
+									<span class="badge badge-danger">
+									<?= $Total; ?>
+									</span>
+								<?php } ?>
 							</td>
-							<td><a href="FullPost.php?id=<?= $PostId; ?>" target="_blank"><span class="btn btn-info">Preview</span></a></td>
+							<td>
+								<a href="FullPost.php?id=<?= $PostId; ?>" target="_blank">
+									<span class="btn btn-info">Preview</span>
+								</a>
+							</td>
 						</tr>
 					</tbody>
 					<?php } ?>

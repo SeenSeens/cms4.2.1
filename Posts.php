@@ -138,7 +138,23 @@ Confirm_Login();
 								?>
 							</td>
 							<td><img src="Uploads/<?= $Image; ?>" alt="" class="img-fluid" width="170px" height="50px"></td>
-							<td>Comments</td>
+							<td>
+								<?php
+								$Total = ApproveCommentsAccordingtoPost($Id);
+								if ($Total > 0) { ?>
+									<span class="badge badge-success">
+									<?php echo $Total; ?>
+									</span>
+								<?php } ?>						
+								
+								<?php
+								$Total = DisApproveCommentsAccordingtoPost($Id);
+								if($Total > 0) { ?>
+									<span class="badge badge-danger">
+									<?= $Total; ?>
+									</span>
+								<?php } ?>
+							</td>
 							<td>
 								<a href="EditPost.php?id=<?= $Id; ?>"><span class="btn btn-warning">Edit</span></a>
 								<a href="DeletePost.php?id=<?= $Id; ?>"><span class="btn btn-danger">Delete</span></a>
