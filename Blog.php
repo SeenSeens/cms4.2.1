@@ -68,8 +68,20 @@ require_once 'Includes/Sessions.php';
 					$stmt->bindValue(':search', '%' . $Search . '%');
 					$stmt->execute();
 				}
+				// Query when pagination is active i.e Blog.php?page=1
+				else if(isset($_GET['page'])) {
+					$Page = $_GET['page'];
+					if ($Page == 0 || $Page < 1) {
+						$ShowPostFrom = 0;
+					} else {
+						$ShowPostFrom = ($Page * 5) - 5;
+					}
+					$sql = "SELECT * FROM posts ORDER BY id DESC LIMIT $ShowPostFrom,5";
+					$stmt = $ConnectingDB->query($sql);
+				}
+				// The default SQl query
 				else {
-					$sql = 'SELECT * FROM posts ORDER BY id DESC';
+					$sql = 'SELECT * FROM posts ORDER BY id DESC LIMIT 0, 3';
 					$stmt = $ConnectingDB->query($sql);
 				}
 				while ($DataRows = $stmt->fetch()) {
@@ -108,7 +120,54 @@ require_once 'Includes/Sessions.php';
 						</a>
 					</div>
 				</div>
+				<br>
 				<?php } ?>
+				<!-- Pagination -->
+				<nav>
+					<ul class="pagination pagination-lg">
+						<!-- Creating backward button -->
+						<?php
+						if (isset($Page)) {
+							if ($Page > 1) {
+							?>
+								<li class="page-item">
+									<a href="Blog.php?page=<?= $Page - 1; ?>" class="page-link">&laquo;</a>
+								</li>
+							<?php }
+						}
+
+						global $ConnectingDB;
+						$sql = "SELECT COUNT(*) FROM posts";
+						$stmt = $ConnectingDB->query($sql);
+						$RowPagination = $stmt->fetch();
+						$TotalPosts = array_shift($RowPagination);
+						$PostPagination = $TotalPosts / 5;
+						$PostPagination = ceil($PostPagination);
+						for ($i = 1; $i <= $PostPagination; $i++) {
+							if ($i == $Page) { ?>
+								<li class="page-item active">
+									<a href="Blog.php?page=<?= $i; ?>" class="page-link"><?= $i; ?></a>
+								</li>
+							<?php }
+							else { ?>
+								<li class="page-item">
+									<a href="Blog.php?page=<?= $i; ?>" class="page-link"><?= $i; ?></a>
+								</li>
+							<?php }
+						} ?>
+						<!-- Creating forward button -->
+						<?php
+						if (isset($Page)) {
+							if ($Page + 1 <= $PostPagination) {
+							?>
+								<li class="page-item">
+									<a href="Blog.php?page=<?= $Page + 1; ?>" class="page-link">&raquo;</a>
+								</li>
+							<?php }
+						} ?>
+					</ul>
+				</nav>
+				<!-- Pagination -->
 			</div>
 			<!-- Main Area End -->
 			<!-- Side Area Start -->
