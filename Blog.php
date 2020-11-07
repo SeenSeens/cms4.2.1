@@ -83,16 +83,24 @@ require_once 'Includes/Sessions.php';
 				else if(isset($_GET['page'])) {
 					$Page = $_GET['page'];
 					if ($Page == 0 || $Page < 1) {
-						$ShowPostFrom = 0;
+						$ShowPostFrom = 1;
 					} else {
 						$ShowPostFrom = ($Page * 5) - 5;
 					}
 					$sql = "SELECT * FROM posts ORDER BY id DESC LIMIT $ShowPostFrom,5";
 					$stmt = $ConnectingDB->query($sql);
 				}
+				// Query when category is active in URL tab
+				else if (isset($_GET['category'])) {
+					$Category = $_GET['category'];
+					$sql = "SELECT * FROM posts WHERE category = :categoryName";
+					$stmt = $ConnectingDB->prepare($sql);
+					$stmt->bindValue(':categoryName', $Category);
+					$stmt->execute();
+				}
 				// The default SQl query
 				else {
-					$sql = 'SELECT * FROM posts ORDER BY id DESC LIMIT 0, 3';
+					$sql = 'SELECT * FROM posts ORDER BY id DESC LIMIT 0, 5';
 					$stmt = $ConnectingDB->query($sql);
 				}
 				while ($DataRows = $stmt->fetch()) {
@@ -154,6 +162,7 @@ require_once 'Includes/Sessions.php';
 						$TotalPosts = array_shift($RowPagination);
 						$PostPagination = $TotalPosts / 5;
 						$PostPagination = ceil($PostPagination);
+						//$Page = 1;
 						for ($i = 1; $i <= $PostPagination; $i++) {
 							if ($i == $Page) { ?>
 								<li class="page-item active">
@@ -224,6 +233,35 @@ require_once 'Includes/Sessions.php';
 						<a href="Blog.php?category=<?= $CategoryName; ?>"><span class="heading"><?= $CategoryName; ?></span></a> <br>
 					<?php } ?>
 					</div>
+				</div>
+				<br>
+				<div class="card">
+					<div class="card-header bg-info text-white">
+						<h2 class="lead"> Recent Posts</h2>
+					</div>
+					<div class="card-body">
+						<?php
+						global $ConnectingDB;
+						$sql = "SELECT * FROM posts ORDER BY id DESC LIMIT 0, 5";
+						$stmt = $ConnectingDB->query($sql);
+						while ($DataRows = $stmt->fetch()) {
+							$Id = $DataRows['id'];
+							$Title = $DataRows['title'];
+							$DateTime = $DataRows['datetime'];
+							$Image = $DataRows['image'];
+						?>
+						<div class="media">
+							<img src="Uploads/<?= htmlentities($Image); ?>" class="d-block img-fluid align-self-start" width="90" height="94">
+							<div class="media-body ml-2">
+								<a href="FullPost.php?id=<?= htmlentities($Id); ?>" target="_blank">
+									<h6 class="lead"><?= htmlentities($Title); ?></h6>
+								</a>
+								<p class="small"><?= htmlentities($DateTime); ?></p>
+							</div>
+						</div>
+						<hr>
+						<?php } ?>
+					</div>	
 				</div>
 			</div>
 			<!-- Side Area End -->

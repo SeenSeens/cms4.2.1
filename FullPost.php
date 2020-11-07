@@ -48,7 +48,7 @@ if (isset($_POST['Submit'])) {
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 	<link rel="stylesheet" href="Css/Style.css">
-	<title>Blog Page</title>
+	<title>Full Post Page</title>
 </head>
 <body>
 	<!-- NAVBAR START -->
@@ -201,9 +201,83 @@ if (isset($_POST['Submit'])) {
 				<!-- Comment Part End -->
 			</div>
 			<!-- Main Area End -->
+
 			<!-- Side Area Start -->
-			<div class="col-sm-4"></div>
+			<div class="col-sm-4">
+				<div class="card mt-4">
+					<div class="card-boby">
+						<img src="Images/bulb-5665770_1920.jpg" class="d-block img-fluid mb-3" alt="">
+						<div class="text-center">
+							Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="card">
+					<div class="card-header bg-dark text-light">
+						<h2 class="lead">Sign Up !</h2>
+					</div>
+					<div class="card-boby" style="margin-top: 5px;">
+						<button type="button" class="btn btn-success btn-block text-center text-white mb-4" name="button">Join the Forum</button>
+						<button type="button" class="btn btn-danger btn-block text-center text-white mb-4" name="button">Login</button>
+						<div class="input-group mb-3" style=" margin-top: 5px;">
+							<input type="text" name="" class="form-control" placeholder="Enter your email" value="">
+							<div class="input-group-append">
+								<button type="button" name="button" class="btn btn-primary btn-sm text-white text-center">Subscribe Now</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="card">
+					<div class="card-header bg-primary text-light">
+						<h2 class="lead">Categories</h2>
+					</div>
+					<div class="card-boby">
+						<?php
+						global $ConnectingDB;
+						$sql = "SELECT * FROM category ORDER BY id DESC";
+						$stmt = $ConnectingDB->query($sql);
+						while ($DataRows = $stmt->fetch()) {
+							$CategoryId = $DataRows['id'];
+							$CategoryName = $DataRows['title'];
+							?>
+						<a href="Blog.php?category=<?= $CategoryName; ?>"> <span class="heading"> <?= $CategoryName; ?></span></a> <br>
+					<?php } ?>
+					</div>
+				</div>
+				<br>
+				<div class="card">
+					<div class="card-header bg-info text-white">
+						<h2 class="lead"> Recent Posts</h2>
+					</div>
+					<div class="card-body">
+						<?php
+						global $ConnectingDB;
+						$sql = "SELECT * FROM posts ORDER BY id DESC LIMIT 0, 5";
+						$stmt = $ConnectingDB->query($sql);
+						while ($DataRows = $stmt->fetch()) {
+							$Id = $DataRows['id'];
+							$Title = $DataRows['title'];
+							$DateTime = $DataRows['datetime'];
+							$Image = $DataRows['image'];
+						?>
+						<div class="media">
+							<img src="Uploads/<?= htmlentities($Image); ?>" class="d-block img-fluid align-self-start" width="90" height="94">
+							<div class="media-body ml-2">
+								<a href="FullPost.php?id=<?= htmlentities($Id); ?>" target="_blank">
+									<h6 class="lead"><?= htmlentities($Title); ?></h6>
+								</a>
+								<p class="small"><?= htmlentities($DateTime); ?></p>
+							</div>
+						</div>
+						<hr>
+						<?php } ?>
+					</div>	
+				</div>
+			</div>
 			<!-- Side Area End -->
+
 		</div>
 	</div>
 	<!-- HEADER -->
