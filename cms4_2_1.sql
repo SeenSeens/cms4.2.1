@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost
--- Thời gian đã tạo: Th10 07, 2020 lúc 06:29 AM
+-- Thời gian đã tạo: Th10 10, 2020 lúc 06:17 PM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.11
 
@@ -33,6 +33,9 @@ CREATE TABLE `admins` (
   `username` varchar(50) NOT NULL,
   `password` varchar(60) NOT NULL,
   `aname` varchar(30) NOT NULL,
+  `aheadline` varchar(12) NOT NULL,
+  `abio` varchar(500) NOT NULL,
+  `aimage` varchar(255) NOT NULL DEFAULT 'avatar.jpg',
   `addedby` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -40,8 +43,8 @@ CREATE TABLE `admins` (
 -- Đang đổ dữ liệu cho bảng `admins`
 --
 
-INSERT INTO `admins` (`id`, `datetime`, `username`, `password`, `aname`, `addedby`) VALUES
-(3, '06-11-2020 19:33:08', 'admin', 'admin', 'Admin', 'TuanPho');
+INSERT INTO `admins` (`id`, `datetime`, `username`, `password`, `aname`, `aheadline`, `abio`, `aimage`, `addedby`) VALUES
+(3, '06-11-2020 19:33:08', 'admin', 'admin', 'Admin', 'Freelancer', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.									\r\n								', '78-785827_user-profile-avatar-login-account-male-user-icon.png', 'TuanPho');
 
 -- --------------------------------------------------------
 

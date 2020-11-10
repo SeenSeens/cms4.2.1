@@ -1,50 +1,55 @@
-+<?php
+<?php
 require_once 'Includes/DB.php';
 require_once 'Includes/Functions.php';
 require_once 'Includes/Sessions.php';
 $_SESSION['TrackingURL'] = $_SERVER['PHP_SELF'];
 Confirm_Login();
-
 // Fetching the existing Admin Data Start
 $AdminId = $_SESSION['UserId'];
 global $ConnectingDB;
 $sql = "SELECT * FROM admins WHERE id = '$AdminId'";
 $stmt = $ConnectingDB->query($sql);
 while ($DataRows = $stmt->fetch()) {
-	$existingName = $DataRows['aname'];
+	$ExistingName = $DataRows['aname'];
+	$ExistingUsername = $DataRows['username'];
+	$ExistingHeadline = $DataRows['aheadline'];
+	$ExistingBio = $DataRows['abio'];
+	$ExistingImage = $DataRows['aimage'];
 }
 // Fetching the existing Admin Data End
 if (isset($_POST['Submit'])) {
-	$AName = $_POST['aname'];
+	$AName = $_POST['Name'];
 	$AHeadline = $_POST['Headline'];
 	$ABio = $_POST['Bio'];
 	$Image = $_FILES['Image']['name'];
-	$Target = 'Uploads/' . basename($_FILES['Image']['name']);
+	$Target = 'Images/' . basename($_FILES['Image']['name']);
 	if (strlen($AHeadline) > 12) {
 		$_SESSION['ErrorMessage'] = 'Headline Should be less than 12 characters';
 		redirect_to('MyProfile.php');
-	} else if (strlen($PostTitle) > 999) {
-		$_SESSION['ErrorMessage'] = 'Post Description should be less than 1000 character';
-		Redirect_to('AddNewPost.php');
+	} else if (strlen($ABio) > 500) {
+		$_SESSION['ErrorMessage'] = 'ABio should be less than 500 character';
+		Redirect_to('MyProfile.php');
 	} else {
+		// Query to update admin data in DB everything is fine
 		global $ConnectingDB;
-		$sql = 'INSERT INTO posts(datetime, title, category, author, image, post) VALUES (:dateTime, :postTitle, :categoryName, :adminName, :imageName, :postDescription)';
-		$stmt = $ConnectingDB->prepare($sql);
-		$stmt->bindValue(':dateTime', $DateTime);
-		$stmt->bindValue(':postTitle', $PostTitle);
-		$stmt->bindValue(':categoryName', $Category);
-		$stmt->bindValue(':adminName', $Admin);
-		$stmt->bindValue(':imageName', $Image);
-		$stmt->bindValue(':postDescription', $PostText);
-		$Execute = $stmt->execute();
+		if (!empty($_FILES['Image']['name'])) {
+			$sql = "UPDATE admins
+					SET aname='$AName', aheadline='$AHeadline', abio='$ABio', aimage='$Image'
+					WHERE id='$AdminId'";
+		} else {
+			$sql = "UPDATE admins
+					SET aname='$AName', aheadline='$AHeadline', abio='$ABio'
+					WHERE id='$AdminId'";
+		}		
+		$Execute = $ConnectingDB->query($sql);
 		move_uploaded_file($_FILES['Image']['tmp_name'], $Target);
 	}
 	if ($Execute) {
-		$_SESSION['SuccessMessage'] = 'Post with id : ' . $ConnectingDB->lastInsertid() . ' Added Successfully.';
-		Redirect_to('AddNewPost.php');
+		$_SESSION['SuccessMessage'] = 'Details Updated Successfully.';
+		Redirect_to('MyProfile.php');
 	} else {
 		$_SESSION['ErrorMessage'] = 'Something went wrong. Try Again!';
-		Redirect_to('AddNewPost.php');
+		Redirect_to('MyProfile.php');
 	}
 }
 ?>
@@ -90,7 +95,8 @@ if (isset($_POST['Submit'])) {
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h1><i class="fas fa-user mr-2"></i>My Profile</h1>
+					<h1><i class="fas fa-user text-success mr-2"></i>@<?= $ExistingUsername; ?></h1>
+					<small><?= $ExistingHeadline; ?></small>
 				</div>
 			</div>
 		</div>
@@ -103,12 +109,12 @@ if (isset($_POST['Submit'])) {
 			<div class="col-md-3">
 				<div class="card">
 					<div class="card-header bg-dark text-light">
-						<h3><?= $existingName; ?></h3>
+						<h3><?= $ExistingName; ?></h3>
 					</div>
 					<div class="card-boy">
-						<img src="Images/avatar.jpg" class="block img-fluid mb-3" alt="">
+						<img src="Images/<?= $ExistingImage; ?>" class="block img-fluid mb-3" alt="">
 						<div class="">
-							Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+							<?= $ExistingBio; ?>
 						</div>
 					</div>					
 				</div>
@@ -137,7 +143,7 @@ if (isset($_POST['Submit'])) {
 								<span class="text-danger">Not more than 12 characters</span>
 							</div>
 							<div class="form-group">
-								<textarea placeholder="Bio" class="form-control" name="BIo" id="Post" cols="10" rows="8">
+								<textarea placeholder="Bio" class="form-control" name="Bio" id="Post" cols="10" rows="8">
 									
 								</textarea>
 							</div>
