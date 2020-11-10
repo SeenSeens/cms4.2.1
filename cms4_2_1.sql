@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 25, 2020 lúc 01:29 PM
--- Phiên bản máy phục vụ: 10.1.38-MariaDB
--- Phiên bản PHP: 7.3.3
+-- Máy chủ: localhost
+-- Thời gian đã tạo: Th10 07, 2020 lúc 06:29 AM
+-- Phiên bản máy phục vụ: 10.4.14-MariaDB
+-- Phiên bản PHP: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -42,7 +41,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `datetime`, `username`, `password`, `aname`, `addedby`) VALUES
-(1, '16-10-2020 20:10:51', 'test', '12345', 'tetst', 'TuanPho');
+(3, '06-11-2020 19:33:08', 'admin', 'admin', 'Admin', 'TuanPho');
 
 -- --------------------------------------------------------
 
@@ -62,9 +61,11 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `title`, `author`, `datetime`) VALUES
-(18, 'dasd', 'TuanPho', '21-09-2020 22:36:28'),
-(19, 'sdfds', 'TuanPho', '24-09-2020 21:48:53'),
-(20, 'sdfsdf', 'TuanPho', '24-09-2020 21:48:57');
+(21, 'Lập trình', 'TuanPho', '06-11-2020 19:33:29'),
+(22, 'Đầu tư', 'TuanPho', '06-11-2020 19:34:19'),
+(23, 'Chứng khoán', 'TuanPho', '06-11-2020 19:34:28'),
+(24, 'Kinh doanh', 'TuanPho', '06-11-2020 19:34:35'),
+(25, 'Data', 'TuanPho', '06-11-2020 19:34:58');
 
 -- --------------------------------------------------------
 
@@ -88,8 +89,7 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `datetime`, `name`, `email`, `comment`, `approvedby`, `status`, `post_id`) VALUES
-(5, '14-10-2020 19:58:59', 'tuan', 'tuan@gmail.com', 'asdasdasd', 'tetst', 'ON', 1),
-(7, '20-10-2020 22:19:55', 'adasd', 'ggghj@yahoo.vn', 'asdffhdrth', 'tetst', 'OFF', 1);
+(8, '06-11-2020 19:42:32', 'phuoc', 'phuocngao@gmail.com', 'test cmt', 'TuanPho', 'ON', 7);
 
 -- --------------------------------------------------------
 
@@ -112,7 +112,13 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `datetime`, `title`, `category`, `author`, `image`, `post`) VALUES
-(1, '10-10-2020 23:39:04', 'aasdasdad', '18', 'TuanPho', 'person-holding-white-scroll-2292837.jpg', '									\r\nasdsadasd								');
+(2, '06-11-2020 19:36:03', 'Lập trình cơ bản', 'Lập trình', 'TuanPho', 'peak-5645235_1920.jpg', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.									\r\n								'),
+(3, '06-11-2020 19:37:26', 'Đầu tư chứng khoán', 'Chứng khoán', 'TuanPho', '123690690_2886481908237913_2821221199354464473_n.jpg', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.									\r\n								'),
+(4, '06-11-2020 19:37:59', 'Kinh doanh online', 'Kinh doanh', 'TuanPho', '123617176_2886481838237920_5428825454904198094_n.jpg', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.									\r\n								'),
+(5, '06-11-2020 19:38:42', 'Đầu tư theo phương pháp 4M', 'Đầu tư', 'TuanPho', '123244510_2884937575059013_7841687663814147980_n.jpg', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.									\r\n								'),
+(6, '06-11-2020 19:40:03', 'Kỹ năng data cho dân văn phòng', 'Data', 'TuanPho', '123715584_2884937675059003_3394857573348674235_n.jpg', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.									\r\n								'),
+(7, '06-11-2020 19:41:58', 'Lập trình game C#', 'Lập trình', 'TuanPho', 'chef_4.jpg', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.									\r\n								'),
+(8, '06-11-2020 19:42:55', 'Kinh doanh gì thời 4.0', 'Kinh doanh', 'TuanPho', 'chef_5.jpg', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.									\r\n								');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -151,25 +157,25 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT cho bảng `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT cho bảng `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

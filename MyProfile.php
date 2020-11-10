@@ -1,4 +1,4 @@
-<?php
++<?php
 require_once 'Includes/DB.php';
 require_once 'Includes/Functions.php';
 require_once 'Includes/Sessions.php';
@@ -15,21 +15,14 @@ while ($DataRows = $stmt->fetch()) {
 }
 // Fetching the existing Admin Data End
 if (isset($_POST['Submit'])) {
-	$PostTitle = $_POST['PostTitle'];
-	$Category = $_POST['Category'];
+	$AName = $_POST['aname'];
+	$AHeadline = $_POST['Headline'];
+	$ABio = $_POST['Bio'];
 	$Image = $_FILES['Image']['name'];
 	$Target = 'Uploads/' . basename($_FILES['Image']['name']);
-	$PostText = $_POST['PostDescription'];
-	$Admin = $_SESSION['AdminName'];
-	date_default_timezone_set('Asia/Ho_Chi_Minh');
-	$CurrenTime = time();
-	$DateTime = strftime("%d-%m-%Y %H:%M:%S", $CurrenTime);
-	if (empty($PostTitle)) {
-		$_SESSION['ErrorMessage'] = 'Title cant be empty';
-		Redirect_to('AddNewPost.php');
-	} else if (strlen($PostTitle) < 5) {
-		$_SESSION['ErrorMessage'] = 'Post title should be greater than 5 characters';
-		redirect_to('AddNewPost.php');
+	if (strlen($AHeadline) > 12) {
+		$_SESSION['ErrorMessage'] = 'Headline Should be less than 12 characters';
+		redirect_to('MyProfile.php');
 	} else if (strlen($PostTitle) > 999) {
 		$_SESSION['ErrorMessage'] = 'Post Description should be less than 1000 character';
 		Redirect_to('AddNewPost.php');
@@ -111,11 +104,13 @@ if (isset($_POST['Submit'])) {
 				<div class="card">
 					<div class="card-header bg-dark text-light">
 						<h3><?= $existingName; ?></h3>
+					</div>
+					<div class="card-boy">
 						<img src="Images/avatar.jpg" class="block img-fluid mb-3" alt="">
 						<div class="">
 							Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
 						</div>
-					</div>
+					</div>					
 				</div>
 			</div>
 			<!-- Left Area End -->
@@ -126,27 +121,25 @@ if (isset($_POST['Submit'])) {
 				echo ErrorMessage();
 				echo SuccessMessage();
 				?>
-				<form action="AddNewPost.php" method="post" enctype="multipart/form-data">
-					<div class="card bg-secondary text-light mb-3">
-						<div class="card-boy bg-dark">
+				<form action="MyProfile.php" method="post" enctype="multipart/form-data">
+					<div class="card bg-dark text-light">
+						<div class="card-header bg-secondary text-light">
+							<h4>Edit Profile</h4>
+						</div>
+						<div class="card-boy">
+							<br>
 							<div class="form-group">
-								<label for="title"><span class="FieldInfo">Post Title:</span></label>
-								<input class="form-control" type="text" name="PostTitle" value="" id="title" placeholder="Type title here">
+								<input class="form-control" type="text" name="Name" value="" id="title" placeholder="Your Name">
 							</div>
 							<div class="form-group">
-								<label for="CategoryTitle"><span class="FieldInfo">Chose Category:</span></label>
-								<select class="form-control" name="Category" id="CategoryTitle">
-									<?php
-									global $ConnectingDB;
-									$sql = 'SELECT id, title FROM category';
-									$stmt = $ConnectingDB->query($sql);
-									while ($DataRows = $stmt->fetch()) :
-									    $Id = $DataRows['id'];
-									    $categoryName = $DataRows['title'];
-									?>
-									<option value="<?= $categoryName; ?>"><?= $categoryName ?></option>
-									<?php endwhile; ?>
-								</select>
+								<input class="form-control" type="text" name="Headline" value="" id="Headline" placeholder="Headline">
+								<small class="text-muted">Add a professional headline like, 'Engineer' at XYZ or 'Architect'</small>
+								<span class="text-danger">Not more than 12 characters</span>
+							</div>
+							<div class="form-group">
+								<textarea placeholder="Bio" class="form-control" name="BIo" id="Post" cols="10" rows="8">
+									
+								</textarea>
 							</div>
 							<div class="form-group mb-1">
 								<div class="custom-file">
@@ -154,12 +147,7 @@ if (isset($_POST['Submit'])) {
 									<label for="imageSelect" class="custom-file-label"><span class="FieldInfo">Select Image:</span></label>
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="Post"><span class="FieldInfo">Post:</span></label>
-								<textarea class="form-control" name="PostDescription" id="Post" cols="30" rows="10">
-									
-								</textarea>
-							</div>
+							
 							<div class="row">
 								<div class="col-lg-6 mb-2">
 									<a href="Dashboard.php" class="btn btn-warning btn-block"><i class="fas fa-arrow-left"></i> Back To Dashboard</a>
