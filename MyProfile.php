@@ -23,8 +23,8 @@ if (isset($_POST['Submit'])) {
 	$ABio = $_POST['Bio'];
 	$Image = $_FILES['Image']['name'];
 	$Target = 'Images/' . basename($_FILES['Image']['name']);
-	if (strlen($AHeadline) > 12) {
-		$_SESSION['ErrorMessage'] = 'Headline Should be less than 12 characters';
+	if (strlen($AHeadline) > 30) {
+		$_SESSION['ErrorMessage'] = 'Headline Should be less than 30 characters';
 		redirect_to('MyProfile.php');
 	} else if (strlen($ABio) > 500) {
 		$_SESSION['ErrorMessage'] = 'ABio should be less than 500 character';
@@ -140,7 +140,7 @@ if (isset($_POST['Submit'])) {
 							<div class="form-group">
 								<input class="form-control" type="text" name="Headline" value="" id="Headline" placeholder="Headline">
 								<small class="text-muted">Add a professional headline like, 'Engineer' at XYZ or 'Architect'</small>
-								<span class="text-danger">Not more than 12 characters</span>
+								<span class="text-danger">Not more than 30 characters</span>
 							</div>
 							<div class="form-group">
 								<textarea placeholder="Bio" class="form-control" name="Bio" id="Post" cols="10" rows="8">

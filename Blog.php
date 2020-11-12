@@ -118,7 +118,7 @@ require_once 'Includes/Sessions.php';
 						<h4 class="card-title"><?= htmlentities($PostTitle); ?></h4>
 						<small class="text-muted">
 							Category <span class="text-dark"><?= htmlentities($Category); ?></span>
-							& Written by <span class="text-dark"><?= htmlentities($Admin); ?></span>
+							& Written by <span class="text-dark"><a href="Profile.php?username=<?= htmlentities($Admin); ?>"><?= htmlentities($Admin); ?></a></span>
 							On <?= htmlentities($DateTime); ?>
 						</small>
 						<span style="float: right;" class="badge badge-dark text-light">
